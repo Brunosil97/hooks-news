@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, useEffect} from 'react';
+import axios from "axios"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+
+  const [results, setResults] = useState([])
+
+  useEffect(() => {
+    getResults()
+    // axios.get('http://hn.algolia.com/api/v1/search?query=reacthooks')
+    //   .then(res => setResults(res.data.hits))
+  }, [])
+
+  const getResults = async () => {
+    const response = await axios
+    .get('http://hn.algolia.com/api/v1/search?query=reacthooks')
+    setResults(response.data.hits)
+  }
+
+  return(
+    <React.Fragment>
+      <ul>
+        {results.map(res => {
+          return <li key={res.objectID}>
+            <a href={res.url}>{res.title}</a>
+          </li>
+        })}
+      </ul>
+    </React.Fragment>
+  )
 }
-
-export default App;
