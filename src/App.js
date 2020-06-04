@@ -1,10 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import axios from "axios"
 
 export default function App() {
 
   const [results, setResults] = useState([])
   const [query, setQuery] = useState("react hooks")
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const searchInputRef = useRef()
 
   useEffect(() => {
     getResults()
@@ -13,9 +16,16 @@ export default function App() {
   }, [])
 
   const getResults = async () => {
-    const response = await axios
-    .get(`http://hn.algolia.com/api/v1/search?query=${query}`)
-    setResults(response.data.hits)
+    setLoading(true);
+
+    try {
+      const response = await axios
+      .get(`http://hn.algolia.com/api/v1/search?query=${query}`);
+      setResults(response.data.hits);
+    } catch (err) {
+      setError(err)
+    }
+    setLoading(false)
   }
 
   const handleChange = event => {
@@ -27,19 +37,28 @@ export default function App() {
     getResults()
   }
 
+  const handleClearSearch = () => {
+    setQuery("");
+    searchInputRef.current.focus()
+  }
+
   return(
     <React.Fragment>
       <form onSubmit={handleSearch}>
-      <input value={query} type="text" onChange={handleChange}/>
+      <input value={query} type="text" onChange={handleChange} ref={searchInputRef}/>
       <button type="submit">Search</button>
+      <button type="button" onClick={handleClearSearch}>Clear</button>
       </form>
-      <ul>
+      {loading ? 
+      <div>Loading Results...</div> 
+      : <ul>
         {results.map(res => {
           return <li key={res.objectID}>
             <a href={res.url}>{res.title}</a>
           </li>
         })}
-      </ul>
+      </ul>}
+      {error ? <div>{error.message}</div> : null}
     </React.Fragment>
   )
 }
