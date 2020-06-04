@@ -43,22 +43,26 @@ export default function App() {
   }
 
   return(
-    <React.Fragment>
-      <form onSubmit={handleSearch}>
-      <input value={query} type="text" onChange={handleChange} ref={searchInputRef}/>
-      <button type="submit">Search</button>
-      <button type="button" onClick={handleClearSearch}>Clear</button>
+    // <React.Fragment>
+    <div className="container max-w-md mx-auto p-4 m-2 bg-purple-lightest shadow-lg rounded">
+      <img src="https://icon.now.sh/react/c0c"  alt="React Logo" className="float-right h-12"/>
+      <h1 className="text-grey-darkest font-thin">Hook News</h1>
+      <form onSubmit={handleSearch} className="mb-2">
+        <input value={query} type="text" onChange={handleChange} ref={searchInputRef} className="border p-1 rounded"/>
+        <button type="submit" className="bg-orange rounded m-1 p-1">Search</button>
+        <button type="button" onClick={handleClearSearch} className="bg-teal text white p-1 rounded">Clear</button>
       </form>
       {loading ? 
-      <div>Loading Results...</div> 
-      : <ul>
+      <div className="font-bold text-orange-dark">Loading Results...</div> 
+      : <ul className="list-reset leading-normal"> 
         {results.map(res => {
-          return <li key={res.objectID}>
+          return <li key={res.objectID} className="text-indigo-dark hover:text-indigo-darkest">
             <a href={res.url}>{res.title}</a>
           </li>
         })}
       </ul>}
       {error ? <div>{error.message}</div> : null}
-    </React.Fragment>
+    {/* </React.Fragment> */}
+    </div>
   )
 }
