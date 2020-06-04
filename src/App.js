@@ -4,6 +4,7 @@ import axios from "axios"
 export default function App() {
 
   const [results, setResults] = useState([])
+  const [query, setQuery] = useState("react hooks")
 
   useEffect(() => {
     getResults()
@@ -13,12 +14,25 @@ export default function App() {
 
   const getResults = async () => {
     const response = await axios
-    .get('http://hn.algolia.com/api/v1/search?query=reacthooks')
+    .get(`http://hn.algolia.com/api/v1/search?query=${query}`)
     setResults(response.data.hits)
+  }
+
+  const handleChange = event => {
+    setQuery(event.target.value)
+  }
+
+  const handleSearch = event => {
+    event.preventDefault()
+    getResults()
   }
 
   return(
     <React.Fragment>
+      <form onSubmit={handleSearch}>
+      <input value={query} type="text" onChange={handleChange}/>
+      <button type="submit">Search</button>
+      </form>
       <ul>
         {results.map(res => {
           return <li key={res.objectID}>
