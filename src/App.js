@@ -11,8 +11,6 @@ export default function App() {
 
   useEffect(() => {
     getResults()
-    // axios.get('http://hn.algolia.com/api/v1/search?query=reacthooks')
-    //   .then(res => setResults(res.data.hits))
   }, [])
 
   const getResults = async () => {
