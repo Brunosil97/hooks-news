@@ -18,7 +18,7 @@ export default function App() {
 
     try {
       const response = await axios
-      .get(`http://hn.algolia.com/api/v1/search?query=${query}`);
+      .get(`https://hn.algolia.com/api/v1/search?query=${query}`);
       setResults(response.data.hits);
     } catch (err) {
       setError(err)
