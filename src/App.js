@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
+import "./app.css"
 import axios from "axios"
 
 export default function App() {
@@ -43,21 +44,21 @@ export default function App() {
   return(
     <div className="container max-w-md mx-auto p-4 m-2 bg-purple-lightest shadow-lg rounded">
       <img src="https://icon.now.sh/react/c0c"  alt="React Logo" className="float-right h-12"/>
-      <h1 className="text-grey-darkest font-thin">Hook News</h1>
+      <h1 id="h1" >Hook News</h1>
       <form onSubmit={handleSearch} className="mb-2">
-        <input value={query} type="text" onChange={handleChange} ref={searchInputRef}/>
-        <button type="submit" className="bg-orange rounded m-1 p-1">Search</button>
-        <button type="button" onClick={handleClearSearch}>Clear</button>
+        <input className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"value={query} type="text" onChange={handleChange} ref={searchInputRef}/>
+        <button type="submit" className="bg-orange rounded m-1 p-1">Search | </button>
+        <button type="button" onClick={handleClearSearch}>| Clear</button>
       </form>
       {loading ? 
       <div>Loading Results...</div> 
-      : <ul> 
+      : <ol> 
         {results.map(res => {
-          return <li key={res.objectID}>
+          return <li id="li" key={res.objectID}>
             <a href={res.url}>{res.title}</a>
           </li>
         })}
-      </ul>}
+      </ol>}
       {error ? <div>{error.message}</div> : null}
     </div>
   )

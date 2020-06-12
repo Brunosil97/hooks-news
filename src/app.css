@@ -1,0 +1,21 @@
+
+.input {
+    padding: 2px;
+    font-size: 12px;
+    border: 1px solid grey;
+    float: left;
+    width: 40%;
+    background: #f1f1f1;
+}
+
+#h1 {
+    font-size: large;
+    color: purple;
+    justify-content: center;
+}
+
+#li {
+    display: list-item;
+    list-style-position: inside;
+    color:purple;
+}
