@@ -45,20 +45,27 @@ export default function App() {
     <div className="container max-w-md mx-auto p-4 m-2 bg-purple-lightest shadow-lg rounded">
       <img src="https://icon.now.sh/react/c0c"  alt="React Logo" className="float-right h-12"/>
       <h1 id="h1" >Hook News</h1>
-      <form onSubmit={handleSearch} className="mb-2">
-        <input className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"value={query} type="text" onChange={handleChange} ref={searchInputRef}/>
-        <button type="submit" className="bg-orange rounded m-1 p-1">Search | </button>
-        <button type="button" onClick={handleClearSearch}>| Clear</button>
+      <form className="mb-2"
+        onSubmit={handleSearch}>
+        <input className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+          value={query} 
+          type="text" 
+          onChange={handleChange} 
+          ref={searchInputRef}/>
+        <button type="submit" 
+        className="bg-orange rounded m-1 p-1">Search | </button>
+        <button type="button" 
+          onClick={handleClearSearch}>| Clear</button>
       </form>
       {loading ? 
       <div>Loading Results...</div> 
-      : <ol> 
-        {results.map(res => {
-          return <li id="li" key={res.objectID}>
-            <a href={res.url}>{res.title}</a>
-          </li>
-        })}
-      </ol>}
+        : <ol> 
+          {results.map(res => {
+            return <li id="li" key={res.objectID}>
+              <a href={res.url}>{res.title}</a>
+            </li>
+          })}
+        </ol>}
       {error ? <div>{error.message}</div> : null}
     </div>
   )
